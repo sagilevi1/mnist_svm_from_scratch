@@ -54,5 +54,4 @@ def cnf_matrix(examples, labels, predicted, string):
     plt.ylabel('actual')
     plt.xlabel('predicted')
     plt.yticks(rotation=0)
-    plt.plot()
-    plt.draw()
+

@@ -11,8 +11,8 @@ import matplotlib.pyplot as plt
 def main():
 
     # choose how much training and testing data set
-    train_examples = 3  # from 1 to 60000
-    test_examples = 1  # from 1 to 10000
+    train_examples = 50  # from 1 to 60000
+    test_examples = 10  # from 1 to 10000
 
     # download the full data set
     train_images, train_labels, test_images, test_labels = download_mnist(path=None)
