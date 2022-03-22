@@ -1,12 +1,10 @@
-from Load import Download_mnistdataset
-from Preprocess import HOG
+from Load import download_mnist
+from Preprocess import hog_feature
 from Preprocess import pca
 from Preprocess import array2binary
 import numpy as np
-import svm
 from svm import SVM
-import results
-from results import cmatrix
+from results import cnf_matrix
 
 
 def main():
@@ -15,12 +13,12 @@ def main():
     test_examples = 10  # from 1 to 10000
 
     # download the full data set
-    train_images, train_labels, test_images, test_labels = Download_mnistdataset(path=None)
+    train_images, train_labels, test_images, test_labels = download_mnist(path=None)
 
     # preprocess - get the hog and pca features
-    train_features = HOG(train_images[0:train_examples], orientations=9, pixels_per_cell=(2, 2), cells_per_block=(1, 1))
-    test_features = HOG(test_images[0:test_examples], orientations=9, pixels_per_cell=(2, 2), cells_per_block=(1, 1))
-    train_features, test_features = pca(train_features, test_features, maxvar=0.9)
+    train_features = hog_feature(train_images[0:train_examples], orientations=9, pixels_per_cell=(2, 2), cells_per_block=(1, 1))
+    test_features = hog_feature(test_images[0:test_examples], orientations=9, pixels_per_cell=(2, 2), cells_per_block=(1, 1))
+    train_features, test_features = pca(train_features, test_features, v_max=0.9)
 
     # multiclass svm - one to all
     train_predicted = -1 * np.ones(train_examples)
@@ -43,8 +41,8 @@ def main():
                 test_predicted[j] = i
 
     # calculate the statistics and visualize
-    cmatrix(train_examples, train_labels, train_predicted)
-    cmatrix(test_examples, test_labels, test_predicted)
+    cnf_matrix(train_examples, train_labels, train_predicted)
+    cnf_matrix(test_examples, test_labels, test_predicted)
 
 
 if __name__ == '__main__':

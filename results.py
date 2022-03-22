@@ -1,9 +1,11 @@
 import numpy as np
-import seaborn as sns; sns.set()
 import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set()
 
-def cmatrix(examples, labels, predicted):
-#caculate confusion matrix
+
+def cnf_matrix(examples, labels, predicted):
+    # calculate confusion matrix
     cm = np.zeros((11, 13))
     for i in range(examples):
         num = np.argmax(labels[i][:])
@@ -12,23 +14,23 @@ def cmatrix(examples, labels, predicted):
 
             cm[int(predicted[i]), num] += 1.0
         else:
-            #make a column of missclass
+            # make a column of miss class
             cm[num, 10] += 1.0
 
-    #calculate the totall accuracy
+    # calculate the total accuracy
     cm[10, 12] = np.trace(cm) / np.sum(cm)
 
-    #calculate statistics for every digits
+    # calculate statistics for every digits
     for i in range(10):
-        tp = cm[i, i] #match point on the diagonal
-        fn = np.sum(cm[i, :]) - tp #predict other digits instead
-        fp = np.sum(cm[:, i]) - tp # wrong predict the digit
-        tn = np.trace(cm) - tp #all the diagnoal line exept for the match point
+        tp = cm[i, i]  # match point on the diagonal
+        fn = np.sum(cm[i, :]) - tp  # predict other digits instead
+        fp = np.sum(cm[:, i]) - tp  # wrong predict the digit
+        tn = np.trace(cm) - tp  # all the diagonal line except for the match point
         if tp != 0:
             r = tp / (tp + fn)  # recall : predict true/all the true
             p = tp / (tp + fp)  # precision  :guess true/all my guess
-            a = (tp + tn) / (tp + tn + fp + fn) #accuracy for the specific digit
-        else: #if the tp=0 prevent division by zero
+            a = (tp + tn) / (tp + tn + fp + fn)  # accuracy for the specific digit
+        else:  # if the tp=0 prevent division by zero
             r = 0
             p = 0
             a = 0
@@ -36,19 +38,19 @@ def cmatrix(examples, labels, predicted):
         cm[i, 11] = r
         cm[i, 12] = a
 
-    #build the labels for the plot
-    namesx = list(map(str, list(range(0, 10))))
-    namesx.append("miss")
-    namesx.append("r")
-    namesx.append("a")
-    namesy = list(map(str, list(range(0, 10))))
-    namesy.append("p")
+    # build the labels for the plot
+    names_x = list(map(str, list(range(0, 10))))
+    names_x.append("miss")
+    names_x.append("r")
+    names_x.append("a")
+    names_y = list(map(str, list(range(0, 10))))
+    names_y.append("p")
 
-    #plot the heatmap
-    ax = sns.heatmap(cm, square=True, annot=True, cbar=False, xticklabels=namesx, yticklabels=namesy)
+    # plot the heatmap
+    ax = sns.heatmap(cm, square=True, annot=True, cbar=False, xticklabels=names_x, yticklabels=names_y)
     plt.ylabel('actual')
     plt.xlabel('predicted')
     plt.yticks(rotation=0)
     ax.xaxis.tick_top()  # x axis on top
-    ax.xaxis.set_label_position('top') #######ulay lo zarih et ze
+    ax.xaxis.set_label_position('top')
     plt.show()
