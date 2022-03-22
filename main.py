@@ -5,12 +5,13 @@ from Preprocess import array2binary
 import numpy as np
 from svm import SVM
 from results import cnf_matrix
+import matplotlib.pyplot as plt
 
 
 def main():
     # choose how much training and testing data set
-    train_examples = 10  # from 1 to 60000
-    test_examples = 10  # from 1 to 10000
+    train_examples = 3  # from 1 to 60000
+    test_examples = 1  # from 1 to 10000
 
     # download the full data set
     train_images, train_labels, test_images, test_labels = download_mnist(path=None)
@@ -41,9 +42,9 @@ def main():
                 test_predicted[j] = i
 
     # calculate the statistics and visualize
-    cnf_matrix(train_examples, train_labels, train_predicted)
-    cnf_matrix(test_examples, test_labels, test_predicted)
-
+    cnf_matrix(train_examples, train_labels, train_predicted, "Training Set")
+    cnf_matrix(test_examples, test_labels, test_predicted, "Testing Set")
+    plt.show()
 
 if __name__ == '__main__':
     main()

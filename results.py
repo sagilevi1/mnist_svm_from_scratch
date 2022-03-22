@@ -4,7 +4,7 @@ import seaborn as sns
 sns.set()
 
 
-def cnf_matrix(examples, labels, predicted):
+def cnf_matrix(examples, labels, predicted, string):
     # calculate confusion matrix
     cm = np.zeros((11, 13))
     for i in range(examples):
@@ -39,18 +39,20 @@ def cnf_matrix(examples, labels, predicted):
         cm[i, 12] = a
 
     # build the labels for the plot
-    names_x = list(map(str, list(range(0, 10))))
-    names_x.append("miss")
-    names_x.append("r")
-    names_x.append("a")
-    names_y = list(map(str, list(range(0, 10))))
-    names_y.append("p")
+    names_x = list(map(str, list(range(0, 10)))) + ["miss", "r", "a"]
+    names_y = list(map(str, list(range(0, 10)))) + ["p"]
+
 
     # plot the heatmap
+
+
+    plt.figure(num=string)
     ax = sns.heatmap(cm, square=True, annot=True, cbar=False, xticklabels=names_x, yticklabels=names_y)
+    ax.xaxis.tick_top()  # x axis on top
+    ax.xaxis.set_label_position('top')
+    ax.set_title(f'Confusion Matrix Of The {string}', y=-0.1)
     plt.ylabel('actual')
     plt.xlabel('predicted')
     plt.yticks(rotation=0)
-    ax.xaxis.tick_top()  # x axis on top
-    ax.xaxis.set_label_position('top')
-    plt.show()
+    plt.plot()
+    plt.draw()
