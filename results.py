@@ -42,10 +42,7 @@ def cnf_matrix(examples, labels, predicted, string):
     names_x = list(map(str, list(range(0, 10)))) + ["miss", "r", "a"]
     names_y = list(map(str, list(range(0, 10)))) + ["p"]
 
-
     # plot the heatmap
-
-
     plt.figure(num=string)
     ax = sns.heatmap(cm, square=True, annot=True, cbar=False, xticklabels=names_x, yticklabels=names_y)
     ax.xaxis.tick_top()  # x axis on top
@@ -53,5 +50,4 @@ def cnf_matrix(examples, labels, predicted, string):
     ax.set_title(f'Confusion Matrix Of The {string}', y=-0.1)
     plt.ylabel('actual')
     plt.xlabel('predicted')
-    plt.yticks(rotation=0)
 
