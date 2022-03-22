@@ -1,7 +1,7 @@
-from Load import download_mnist
-from Preprocess import hog_feature
-from Preprocess import pca
-from Preprocess import array2binary
+from load import download_mnist
+from preprocess import hog_feature
+from preprocess import pca
+from preprocess import array2binary
 import numpy as np
 from svm import SVM
 from results import cnf_matrix
@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 
 def main():
     # choose how much training and testing data set
-    train_examples = 5  # from 1 to 60000
-    test_examples = 1  # from 1 to 10000
+    train_examples = 10000  # from 1 to 60000
+    test_examples = 100  # from 1 to 10000
 
     # download the full data set
     train_images, train_labels, test_images, test_labels = download_mnist(path=None)
