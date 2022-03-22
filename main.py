@@ -47,5 +47,6 @@ def main():
     cnf_matrix(test_examples, test_labels, test_predicted, "Testing Set")
     plt.show()
 
+
 if __name__ == '__main__':
     main()

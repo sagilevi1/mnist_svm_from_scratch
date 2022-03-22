@@ -1,6 +1,6 @@
-matplotlib == 3.5.1
-numpy ==1.22.2
-scikit-image  == 0.19.2
-seaborn == 0.11.2
-sklearn == 0.0
-urllib3 == 1.26.9
+matplotlib==3.5.1
+numpy==1.22.2
+scikit-image==0.19.2
+seaborn==0.11.2
+sklearn==0.0
+urllib3==1.26.9
