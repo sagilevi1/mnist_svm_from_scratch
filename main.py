@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 
 def main():
+
     # choose how much training and testing data set
     train_examples = 3  # from 1 to 60000
     test_examples = 1  # from 1 to 10000
