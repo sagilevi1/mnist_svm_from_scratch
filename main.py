@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 def main():
     # choose how much training and testing data set
-    train_examples = 10000  # from 1 to 60000
+    train_examples = 2000  # from 1 to 60000
     test_examples = 100  # from 1 to 10000
 
     # download the full data set
@@ -44,8 +44,8 @@ def main():
                 test_predicted[j] = i
 
     # calculate the statistics and visualize
-    cnf_matrix(train_examples, train_labels, train_predicted, "Training Set")
-    cnf_matrix(test_examples, test_labels, test_predicted, "Testing Set")
+    cnf_matrix(train_examples, train_labels, train_predicted, f"Training Set - {train_examples} Examples")
+    cnf_matrix(test_examples, test_labels, test_predicted, f"Testing Set - {test_examples} Examples")
     plt.show()
 
 

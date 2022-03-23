@@ -7,6 +7,7 @@ sns.set()
 def cnf_matrix(examples, labels, predicted, string):
     # calculate confusion matrix
     cm = np.zeros((11, 13))
+
     for i in range(examples):
         num = np.argmax(labels[i][:])
         # place the additional example
@@ -25,7 +26,7 @@ def cnf_matrix(examples, labels, predicted, string):
         tp = cm[i, i]  # match point on the diagonal
         fn = np.sum(cm[i, :]) - tp  # predict other digits instead
         fp = np.sum(cm[:, i]) - tp  # wrong predict the digit
-        tn = np.trace(cm) - tp  # all the diagonal line except for the match point
+        tn = (np.trace(cm) - tp)/9  # all the diagonal line except for the match point - scale per digits
         if tp != 0:
             r = tp / (tp + fn)  # recall : predict true/all the true
             p = tp / (tp + fp)  # precision  :guess true/all my guess
@@ -38,6 +39,7 @@ def cnf_matrix(examples, labels, predicted, string):
         cm[i, 11] = r
         cm[i, 12] = a
 
+    cm[10, 10:12] = None
     # build the labels for the plot
     names_x = list(map(str, list(range(0, 10)))) + ["miss", "r", "a"]
     names_y = list(map(str, list(range(0, 10)))) + ["p"]
@@ -48,6 +50,12 @@ def cnf_matrix(examples, labels, predicted, string):
     ax.xaxis.tick_top()  # x axis on top
     ax.xaxis.set_label_position('top')
     ax.set_title(f'Confusion Matrix Of The {string}', y=-0.1)
+    ax.axvline(x=10, linewidth=2, color="w")
+    ax.axvline(x=11, linewidth=2, color="w")
+    ax.axvline(x=12, linewidth=2, color="w")
+    ax.axhline(y=10, linewidth=2, color="w")
     plt.ylabel('actual')
     plt.xlabel('predicted')
+
+
 
