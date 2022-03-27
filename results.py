@@ -9,7 +9,7 @@ def cnf_matrix(examples, labels, predicted, string):
     cm = np.zeros((11, 13))
 
     for i in range(examples):
-        num = np.argmax(labels[i][:])
+        num = labels[i]
         # place the additional example
         if predicted[i] != -1:
 
@@ -24,12 +24,12 @@ def cnf_matrix(examples, labels, predicted, string):
     # calculate statistics for every digits
     for i in range(10):
         tp = cm[i, i]  # match point on the diagonal
-        fn = np.sum(cm[i, :]) - tp  # predict other digits instead
-        fp = np.sum(cm[:, i]) - tp  # wrong predict the digit
+        fn = np.sum(cm[i, :]) - tp  # predict other digits instead of i
+        fp = np.sum(cm[:, i]) - tp  # wrong predict the i digit
         tn = (np.trace(cm) - tp)/9  # all the diagonal line except for the match point - scale per digits
         if tp != 0:
-            r = tp / (tp + fn)  # recall : predict true/all the true
-            p = tp / (tp + fp)  # precision  :guess true/all my guess
+            p = tp / (tp + fn)  # recall : guess "true" and correct/all the actual true
+            r = tp / (tp + fp)  # precision  :guess "true" and correct/all my "true" guess
             a = (tp + tn) / (tp + tn + fp + fn)  # accuracy for the specific digit
         else:  # if the tp=0 prevent division by zero
             r = 0
@@ -41,8 +41,8 @@ def cnf_matrix(examples, labels, predicted, string):
 
     cm[10, 10:12] = None
     # build the labels for the plot
-    names_x = list(map(str, list(range(0, 10)))) + ["miss", "r", "a"]
-    names_y = list(map(str, list(range(0, 10)))) + ["p"]
+    names_x = list(map(str, list(range(0, 10)))) + ["miss", "p", "a"]
+    names_y = list(map(str, list(range(0, 10)))) + ["r"]
 
     # plot the heatmap
     plt.figure(num=string)

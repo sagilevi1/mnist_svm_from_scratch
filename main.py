@@ -1,7 +1,7 @@
 from load import download_mnist
 from preprocess import hog_feature
 from preprocess import pca
-from preprocess import array2binary
+from preprocess import num2binary
 import numpy as np
 from svm import SVM
 from results import cnf_matrix
@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 
 def main():
     # choose how much training and testing data set
-    train_examples = 2000  # from 1 to 60000
-    test_examples = 100  # from 1 to 10000
+    train_examples = 10  # from 1 to 60000
+    test_examples = 1  # from 1 to 10000
 
     # download the full data set
     train_images, train_labels, test_images, test_labels = download_mnist(path=None)
@@ -28,7 +28,7 @@ def main():
     test_predicted = -1 * np.ones(test_examples)
     for i in range(10):
         # move the labels to binary representation for every digit
-        trn_labels = array2binary(train_labels[0:train_examples], num=i)
+        trn_labels = num2binary(train_labels[0:train_examples], num=i)
         clf = SVM()
         # fit on the training set
         clf.fit(train_features, trn_labels)
@@ -37,10 +37,10 @@ def main():
         test_predictions = clf.predict(test_features)
         # Check if not predicted in the earlier digits
         for j in range(train_examples):
-            if train_predicted[j] == -1 and train_predictions[j] == 1:  # and trn_labels[j]==1:
+            if train_predicted[j] == -1 and train_predictions[j] == 1:
                 train_predicted[j] = i
         for j in range(test_examples):
-            if test_predicted[j] == -1 and test_predictions[j] == 1:  # and tst_labels[j]==1:
+            if test_predicted[j] == -1 and test_predictions[j] == 1:
                 test_predicted[j] = i
 
     # calculate the statistics and visualize

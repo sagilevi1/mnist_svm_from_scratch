@@ -42,23 +42,24 @@ def download_mnist(path):
         with gzip.open(path1) as f:
             # First 16 bytes are magic_number, n_images, n_rows, n_cols
             pixels = np.frombuffer(f.read(), 'B', offset=16)
-        return pixels.reshape(-1, 784).astype('float32') / 255
+        return pixels.reshape(-1, 28, 28).astype('float32') / 255
 
     def _labels(path2):
         """Return labels loaded locally."""
         with gzip.open(path2) as f:
             # First 8 bytes are magic_number, n_labels
             integer_labels = np.frombuffer(f.read(), 'B', offset=8)
+        return integer_labels
 
-        def _one_hot(int_labels):
-            """Return matrix whose rows are one hot encodings of integers."""
-            n_rows = len(int_labels)
-            n_cols = int_labels.max() + 1
-            one_hot = np.zeros((n_rows, n_cols), dtype='int8')
-            one_hot[np.arange(n_rows), int_labels] = 1
-            return one_hot
-
-        return _one_hot(integer_labels)
+        # def _one_hot(int_labels):
+        #     """Return matrix whose rows are one hot encodings of integers."""
+        #     n_rows = len(int_labels)
+        #     n_cols = int_labels.max() + 1
+        #     one_hot = np.zeros((n_rows, n_cols), dtype='int8')
+        #     one_hot[np.arange(n_rows), int_labels] = 1
+        #     return one_hot
+        #
+        # return _one_hot(integer_labels)
 
     train_images = _images(os.path.join(path, files[0]))
     train_labels = _labels(os.path.join(path, files[1]))
@@ -66,10 +67,3 @@ def download_mnist(path):
     test_labels = _labels(os.path.join(path, files[3]))
 
     return train_images, train_labels, test_images, test_labels
-
-
-
-
-
-
-

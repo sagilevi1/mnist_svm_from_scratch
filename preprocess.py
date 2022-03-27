@@ -4,22 +4,27 @@ from sklearn import preprocessing
 from sklearn.preprocessing import StandardScaler
 
 
-def array2binary(arr, num):
+# def array2binary(arr, num):
+#     # convert the label to binary classification for specific digit
+#     y = []
+#     for i in arr:
+#         if i[num] == 1:
+#             y.append(1)
+#         else:
+#             y.append(-1)
+#     return y
+
+def num2binary(num1, num):
     # convert the label to binary classification for specific digit
-    y = []
-    for i in arr:
-        if i[num] == 1:
-            y.append(1)
-        else:
-            y.append(-1)
+    y = [1 if x == num else -1 for x in num1]
     return y
 
 
 def hog_feature(images, orientations, pixels_per_cell, cells_per_block):
     features = []
     for img in images:
-        resized = img.reshape(28, 28)
-        fd, hog_image = hog(resized, orientations, pixels_per_cell, cells_per_block, visualize=True)
+        # img = img.reshape(28, 28)
+        fd, hog_image = hog(img, orientations, pixels_per_cell, cells_per_block, visualize=True)
         features.append(fd)
     # normalized the feature
     scale = StandardScaler()
